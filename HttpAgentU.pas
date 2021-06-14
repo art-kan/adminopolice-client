@@ -3,7 +3,7 @@
 interface
 
 uses SyncObjs, SysUtils, System.Classes, httpsend, superobject, Vcl.Forms,
-  Vcl.Dialogs, ssl_openssl, ssl_openssl_lib, ConfigControllerU, ReportRequestU,
+  Vcl.Dialogs, ssl_openssl, ssl_openssl_lib, ConfigControllerU, ReportTaskU,
   HttpRequesterU, PassWord;
 
 type
@@ -23,7 +23,7 @@ THttpAgent = class(THttpRequester)
   public
     constructor Create();
     function IsAuthorized(): boolean;
-    function GetReportRequests(LastServerTime: int64): TArray<TReportRequest>;
+    function GetReportRequests(LastReportTaskId: string): TArray<TReportTask>;
 
   private
     function CheckAuthToken(Token: string): boolean;
@@ -113,8 +113,8 @@ begin
   HttpAgent.Free;
 end;
 
-function THttpAgent.GetReportRequests(LastServerTime: int64)
-  : TArray<TReportRequest>;
+function THttpAgent.GetReportRequests(LastReportTaskId: string)
+  : TArray<TReportTask>;
 var
   Requests: TSuperArray;
   Request: ISuperObject;
@@ -131,8 +131,12 @@ begin
   for i := 0 to Requests.Length - 1 do
   begin
     Request := Requests.O[i];
-    Result[i] := TReportRequest
-      .Create(Request.S['name'], Request.i['in_mins'] * 60000);
+    Result[i] := TReportTask.Create(
+      Request.S['id'],
+      Request.I['action'],
+      Request.S['script_name'],
+      Request.S['arguments']
+    );
   end;
   {$ENDIF}
 end;

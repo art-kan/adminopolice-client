@@ -3,14 +3,15 @@ program BlickStatus;
 uses
   Vcl.Forms,
   MainFormU in 'MainFormU.pas' {MainForm},
-  ReportResponserU in 'ReportResponserU.pas',
+  WorkProcessorU in 'WorkProcessorU.pas',
   ReportScriptRunnerU in 'ReportScriptRunnerU.pas',
-  ReportRequestU in 'ReportRequestU.pas',
+  ReportTaskU in 'ReportTaskU.pas',
   HttpAgentU in 'HttpAgentU.pas',
   ConfigControllerU in 'ConfigControllerU.pas',
   PassWord in 'PassWord.pas' {PasswordDlg},
   HttpRequesterU in 'HttpRequesterU.pas',
-  TimeUtilsU in 'TimeUtilsU.pas';
+  TimeUtilsU in 'TimeUtilsU.pas',
+  TaskAssignersU in 'TaskAssignersU.pas';
 
 {$R *.res}
 

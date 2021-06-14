@@ -53,7 +53,6 @@ type
 
       function Request(const Method: string; const URL: string): boolean;
 
-
       procedure Query(
         const Method: string;
         const URL: string;

@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ReportResponserU, Vcl.ExtCtrls, HttpAgentU, Password;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, WorkProcessorU, Vcl.ExtCtrls, HttpAgentU, Password;
 
 type
   TMainForm = class(TForm)
@@ -13,7 +13,7 @@ type
     procedure OnCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure OnTrayClick(Sender: TObject);
   private
-    ReportResponser: TReportResponser;
+    ReportResponser: TWorkProcessor;
 
     procedure InitializeInner;
   public
@@ -29,7 +29,11 @@ implementation
 
 procedure TMainForm.OnTrayClick(Sender: TObject);
 begin
-  if Visible then Hide else Show;
+  {$IFDEF BETTA}
+    Hide;
+  {$ELSE}
+    if Visible then Hide else Show;
+  {$ENDIF}
 end;
 
 procedure TMainForm.OnCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -57,7 +61,7 @@ end;
 procedure TMainForm.InitializeInner();
 begin
   DemandAuthorization(self);
-  ReportResponser := TReportResponser.Create;
+  ReportResponser := TWorkProcessor.Create;
 end;
 
 end.

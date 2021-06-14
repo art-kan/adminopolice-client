@@ -50,13 +50,19 @@ end;
 constructor TConfigController.MakeSingleton;
 begin
   AppName := TPath.GetFileNameWithoutExtension(Application.ExeName);
-  AppDataDirPath := TPath.Combine(TPath.GetPublicPath, AppName);
+
+  {$IFDEF BETTA}
+    AppDataDirPath := ExtractFileDir(Application.ExeName);
+  {$ELSE}
+    AppDataDirPath := TPath.Combine(TPath.GetPublicPath, AppName);
+  {$ENDIF}
   if not ForceDirectories(AppDataDirPath) then
   begin
     ShowMessage('Couldn''t initilize config.ini. Contact your vendor');
   end;
   IniFile := TIniFile.Create(TPath.Combine(AppDataDirPath, 'config.ini'));
   { TODO: Encrypt/decrypt config file }
+
 end;
 
 function TConfigController.ReadAuthToken: string;

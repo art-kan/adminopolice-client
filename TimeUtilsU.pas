@@ -9,7 +9,6 @@ type
     public
       constructor Create();
       procedure Start();
-//      function GetStartTime(): TDateTime;
     protected
       function GetElapsedMilliseconds(): Int64;
     private
@@ -27,6 +26,7 @@ type
   TTimeouter = class(TUptimeWatch)
     public
       function isExpired(): boolean;
+      procedure SetOnFire();
     published
       Constructor Create(MillisecondsToWait: integer);
     private
@@ -64,8 +64,12 @@ end;
 
 function TTimeouter.isExpired(): boolean;
 begin
-  ShowMessage('ElapsedMss: ' + inttoStr(GetElapsedMilliseconds));
   Result := GetElapsedMilliseconds() >= MillisecondsToWait;
+end;
+
+procedure TTimeouter.SetOnFire();
+begin
+  StartBar := StartBar - MillisecondsToWait;
 end;
 
 end.
