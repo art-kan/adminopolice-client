@@ -66,7 +66,6 @@ procedure TServerTaskAssigner.HardLoad(
 );
 var
   Task: TReportTask;
-  a: HttpException;
 begin
   try
     for Task in HttpAgent.GetReportRequests(LastReportTaskId) do
@@ -87,9 +86,15 @@ end;
 
 constructor TLocalTaskAssigner.Create();
 begin
+  {$IF DEBUG}
+  SysinfoTimer := TTimeouter.Create(5 * 60 * 1000);
+  WANSpeedTimer := TTimeouter.Create(5 * 60 * 1000);
+  ActivityMeasureTimer := TTimeouter.Create(5 * 60 * 1000);
+  {$ELSE}
   SysinfoTimer := TTimeouter.Create(12 * 60 * 60 * 1000);
   WANSpeedTimer := TTimeouter.Create(1 * 60 * 60 * 1000);
   ActivityMeasureTimer := TTimeouter.Create(1 * 60 * 60 * 1000);
+  {$ENDIF}
 
   // hack
   SysinfoTimer.SetOnFire;

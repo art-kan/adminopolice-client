@@ -56,6 +56,7 @@ begin
   {$ELSE}
     AppDataDirPath := TPath.Combine(TPath.GetPublicPath, AppName);
   {$ENDIF}
+
   if not ForceDirectories(AppDataDirPath) then
   begin
     ShowMessage('Couldn''t initilize config.ini. Contact your vendor');
