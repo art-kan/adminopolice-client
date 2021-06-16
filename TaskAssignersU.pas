@@ -86,7 +86,7 @@ end;
 
 constructor TLocalTaskAssigner.Create();
 begin
-  {$IF DEBUG}
+  {$IFDEF DEBUG}
   SysinfoTimer := TTimeouter.Create(5 * 60 * 1000);
   WANSpeedTimer := TTimeouter.Create(5 * 60 * 1000);
   ActivityMeasureTimer := TTimeouter.Create(5 * 60 * 1000);
